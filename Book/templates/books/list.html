@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}图灵书城-商品列表{% endblock title %}
+{% block topfiles %}
+{% endblock topfiles %}
+{% block body %}
+
+    <div class="navbar_con">
+        <div class="navbar clearfix">
+            <div class="subnav_con fl">
+                <h1>全部商品分类</h1>   
+                <span></span>           
+                <ul class="subnav">
+                    <li><a href="{% url 'books:index' %}" class="python">后端开发</a></li>
+                    <li><a href="{% url 'books:index' %}" class="javascript">前端开发</a></li>
+                    <li><a href="{% url 'books:index' %}" class="algorithms">数据结构&算法</a></li>
+                    <li><a href="{% url 'books:index' %}" class="machinelearning">人工智能&大数据</a></li>
+                    <li><a href="{% url 'books:index' %}" class="operatingsystem">网络&操作系统</a></li>
+                    <li><a href="{% url 'books:index' %}" class="database">数据库</a></li>
+                </ul>
+            </div>
+            <ul class="navlist fl">
+                <li><a href="{% url 'books:index' %}">首页</a></li>
+                <li class="interval">|</li>
+                <li><a href="http://www.ituring.com.cn/">图灵社区</a></li>
+                <li class="interval">|</li>
+                <li><a href="https://www.jiumodiary.com/">电子书下载</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="breadcrumb">
+        <a href="{% url 'books:index' %}">全部分类</a>
+        <span>></span>
+        <a href="#">{{ type_title }}</a>
+    </div>
+
+    <div class="main_wrap clearfix">
+        <div class="l_wrap fl clearfix">
+            <div class="new_book">
+                <h3>新品推荐</h3>
+                <ul>
+                    {% for book in books_new %}
+                    <li>
+                        <a href="{% url 'books:detail' books_id=book.id %}"><img src="{% static book.image.url %}"></a>
+                        <h4><a href="{% url 'books:detail' books_id=book.id %}">{{ book.name }}</a></h4>
+                        <div class="prize">￥{{ book.price }}</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="r_wrap fr clearfix">
+            <div class="sort_bar">
+                <a href="/list/{{ type_id }}/1/" {% if sort == 'default' %}class="active"{% endif %}>默认</a>
+                <a href="/list/{{ type_id }}/1/?sort=price" {% if sort == 'price' %}class="active"{% endif %}>价格</a>
+                <a href="/list/{{ type_id }}/1/?sort=hot" {% if sort == 'hot' %}class="active"{% endif %}>人气</a>
+            </div>
+
+            <ul class="book_type_list clearfix">
+                {% for book in books_li %}
+                    <li>
+                        <a href="{% url 'books:detail' books_id=book.id %}"><img src="{% static book.image.url %}"></a>
+                        <h4><a href="{% url 'books:detail' books_id=book.id %}">{{ books.name }}</a></h4>
+                        <div class="operate">
+                            {% csrf_token %}
+                            <span class="price">￥{{ book.price }}</span>
+                            <span class="unit">/册</span>
+                            <a href="javascript:;" class="add_book" books_id="{{ book.id }}" title="加入购物车"></a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="pagenation">
+                {% if books_li.has_previous %}
+                    <a href="/list/{{ type_id }}/{{ books_li.previous_page_number }}/?sort={{ sort }}">上一页</a>
+               {% endif %}
+                {% for pindex in pages %}
+                    {% if pindex == books_li.number %}
+                        <a href="/list/{{ type_id }}/{{ pindex }}/?sort={{ sort }}" class="active">{{ pindex }}</a>
+                    {% else %}
+                        <a href="/list/{{ type_id }}/{{ pindex }}/?sort={{ sort }}">{{ pindex }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if books_li.has_next %}
+                    <a href="/list/{{ type_id }}/{{ books_li.next_page_number }}/?sort={{ sort }}">下一页></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    $(function() {
+        //点击加入购物车
+        $('.add_book').click(function(){
+            // 获取商品的id和商品数量
+            var books_id = $(this).attr('books_id');
+            var books_count = 1;
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            // 发起请求，访问/cart/add/, 进行购物车数据的添加
+            //请求参数
+            var params = {
+                'books_id': books_id,
+                'books_count':1,
+                'csrfmiddlewaretoken': csrf
+            }
+
+            $.post('{% url 'cart:add' %}', params, function (data) {
+                if (data.res == 5){
+                    // 添加成功,购物车显示数量
+                    //获得原来的购物车数量
+                    var count = $('#show_count').html();
+                    //加上提交的数量即的总数量
+                    var count = parseInt(count) + parseInt(books_count);
+                    //显示添加后的购物车商品数量
+                    $('#show_count').html(count);
+                } else {
+                    // 添加失败
+                    //弹出失败原因
+                    alert(data.errmsg)
+                }
+            })
+        })
+    }
+    )
+    </script>
+
+
+{% endblock body %}

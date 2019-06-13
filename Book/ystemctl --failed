@@ -1,0 +1,80 @@
+UNIT                                              LOAD   ACTIVE SUB       DESCRIPTION
+proc-sys-fs-binfmt_misc.automount                 loaded active running   Arbitrary Executable File Formats File System Auto
+sys-devices-pci0000:00-0000:00:01.1-ata2-host1-target1:0:1-1:0:1:0-block-sr0.device loaded active plugged   QEMU_DVD-ROM
+sys-devices-platform-serial8250-tty-ttyS1.device  loaded active plugged   /sys/devices/platform/serial8250/tty/ttyS1
+sys-devices-platform-serial8250-tty-ttyS2.device  loaded active plugged   /sys/devices/platform/serial8250/tty/ttyS2
+sys-devices-platform-serial8250-tty-ttyS3.device  loaded active plugged   /sys/devices/platform/serial8250/tty/ttyS3
+sys-devices-pnp0-00:06-tty-ttyS0.device           loaded active plugged   /sys/devices/pnp0/00:06/tty/ttyS0
+sys-devices-vbd\x2d768-block-xvda-xvda1.device    loaded active plugged   /sys/devices/vbd-768/block/xvda/xvda1
+sys-devices-vbd\x2d768-block-xvda-xvda2.device    loaded active plugged   LVM PV wV3L53-1vQ0-OXVg-t1jT-L6Cy-cdfv-ro5T8p on /
+sys-devices-vbd\x2d768-block-xvda.device          loaded active plugged   /sys/devices/vbd-768/block/xvda
+sys-devices-vbd\x2d832-block-xvdb.device          loaded active plugged   /sys/devices/vbd-832/block/xvdb
+sys-devices-vif\x2d0-net-eth0.device              loaded active plugged   /sys/devices/vif-0/net/eth0
+sys-devices-virtual-block-dm\x2d0.device          loaded active plugged   /sys/devices/virtual/block/dm-0
+sys-devices-virtual-block-dm\x2d1.device          loaded active plugged   /sys/devices/virtual/block/dm-1
+sys-devices-virtual-tty-hvc0.device               loaded active plugged   /sys/devices/virtual/tty/hvc0
+sys-devices-virtual-tty-hvc1.device               loaded active plugged   /sys/devices/virtual/tty/hvc1
+sys-devices-virtual-tty-hvc2.device               loaded active plugged   /sys/devices/virtual/tty/hvc2
+sys-devices-virtual-tty-hvc3.device               loaded active plugged   /sys/devices/virtual/tty/hvc3
+sys-devices-virtual-tty-hvc4.device               loaded active plugged   /sys/devices/virtual/tty/hvc4
+sys-devices-virtual-tty-hvc5.device               loaded active plugged   /sys/devices/virtual/tty/hvc5
+sys-devices-virtual-tty-hvc6.device               loaded active plugged   /sys/devices/virtual/tty/hvc6
+sys-devices-virtual-tty-hvc7.device               loaded active plugged   /sys/devices/virtual/tty/hvc7
+sys-module-configfs.device                        loaded active plugged   /sys/module/configfs
+sys-subsystem-net-devices-eth0.device             loaded active plugged   /sys/subsystem/net/devices/eth0
+-.mount                                           loaded active mounted   /
+boot.mount                                        loaded active mounted   /boot
+dev-hugepages.mount                               loaded active mounted   Huge Pages File System
+dev-mqueue.mount                                  loaded active mounted   POSIX Message Queue File System
+proc-sys-fs-binfmt_misc.mount                     loaded active mounted   Arbitrary Executable File Formats File System
+proc-xen.mount                                    loaded active mounted   /proc/xen
+run-user-0.mount                                  loaded active mounted   /run/user/0
+sys-kernel-config.mount                           loaded active mounted   Configuration File System
+sys-kernel-debug.mount                            loaded active mounted   Debug File System
+brandbot.path                                     loaded active waiting   Flexible branding
+systemd-ask-password-plymouth.path                loaded active waiting   Forward Password Requests to Plymouth Directory Wa
+systemd-ask-password-wall.path                    loaded active waiting   Forward Password Requests to Wall Directory Watch
+session-1.scope                                   loaded active abandoned Session 1 of user root
+session-283.scope                                 loaded active abandoned Session 283 of user root
+session-318.scope                                 loaded active running   Session 318 of user root
+session-343.scope                                 loaded active abandoned Session 343 of user root
+session-367.scope                                 loaded active running   Session 367 of user root
+auditd.service                                    loaded active running   Security Auditing Service
+cloudhost.service                                 loaded active running   CloudHost
+crond.service                                     loaded active running   Command Scheduler
+dbus.service                                      loaded active running   D-Bus System Message Bus
+firewalld.service                                 loaded active running   firewalld - dynamic firewall daemon
+getty@tty1.service                                loaded active running   Getty on tty1
+irqbalance.service                                loaded active running   irqbalance daemon
+kdump.service                                     loaded active exited    Crash recovery kernel arming
+kmod-static-nodes.service                         loaded active exited    Create list of required static device nodes for th
+lvm2-lvmetad.service                              loaded active running   LVM2 metadata daemon
+lvm2-monitor.service                              loaded active exited    Monitoring of LVM2 mirrors, snapshots etc. using d
+lvm2-pvscan@202:2.service                         loaded active exited    LVM2 PV scan on device 202:2
+network.service                                   loaded active exited    LSB: Bring up/down networking
+NetworkManager-wait-online.service                loaded active exited    Network Manager Wait Online
+NetworkManager.service                            loaded active running   Network Manager
+polkit.service                                    loaded active running   Authorization Manager
+postfix.service                                   loaded active running   Postfix Mail Transport Agent
+rhel-dmesg.service                                loaded active exited    Dump dmesg to /var/log/dmesg
+rhel-import-state.service                         loaded active exited    Import network configuration from initramfs
+rhel-readonly.service                             loaded active exited    Configure read-only root support
+rsyslog.service                                   loaded active running   System Logging Service
+serial-getty@hvc0.service                         loaded active running   Serial Getty on hvc0
+sshd.service                                      loaded active running   OpenSSH server daemon
+systemd-journal-flush.service                     loaded active exited    Flush Journal to Persistent Storage
+systemd-journald.service                          loaded active running   Journal Service
+systemd-logind.service                            loaded active running   Login Service
+systemd-random-seed.service                       loaded active exited    Load/Save Random Seed
+systemd-remount-fs.service                        loaded active exited    Remount Root and Kernel File Systems
+systemd-sysctl.service                            loaded active exited    Apply Kernel Variables
+systemd-tmpfiles-setup-dev.service                loaded active exited    Create Static Device Nodes in /dev
+systemd-tmpfiles-setup.service                    loaded active exited    Create Volatile Files and Directories
+systemd-udev-trigger.service                      loaded active exited    udev Coldplug all Devices
+systemd-udevd.service                             loaded active running   udev Kernel Device Manager
+systemd-update-utmp.service                       loaded active exited    Update UTMP about System Boot/Shutdown
+systemd-user-sessions.service                     loaded active exited    Permit User Sessions
+systemd-vconsole-setup.service                    loaded active exited    Setup Virtual Console
+tuned.service                                     loaded active running   Dynamic System Tuning Daemon
+xe-linux-distribution.service                     loaded active running   LSB: Virtual Machine daemon providing host integra
+-.slice                                           loaded 

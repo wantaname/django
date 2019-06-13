@@ -1,0 +1,222 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SQL注入演示</title>
+<link rel="stylesheet" href="{% static 'test/css/normalize.css' %}">
+<link rel="stylesheet" href="{% static 'test/css/login.css' %}">
+<link rel="stylesheet" href="{% static 'test/css/sign-up-login.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'test/css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'test/css/inputEffect.css' %}" />
+<link rel="stylesheet" href="{% static 'test/css/tooltips.css' %}" />
+<link rel="stylesheet" href="{% static 'test/css/spop.min.css' %}" />
+
+<script src="{% static 'test/js/jquery.min.js' %}"></script>
+<script src="{% static 'test/js/snow.js' %}"></script>
+<script src="{% static 'test/js/jquery.pure.tooltips.js' %}"></script>
+<script src="{% static 'test/js/spop.min.js' %}"></script>
+<script>	
+	(function() {
+
+		if (!String.prototype.trim) {
+			(function() {
+				// Make sure we trim BOM and NBSP
+				var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+				String.prototype.trim = function() {
+					return this.replace(rtrim, '');
+				};
+			})();
+		}
+
+		[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+			// in case the input is already filled..
+			if( inputEl.value.trim() !== '' ) {
+				classie.add( inputEl.parentNode, 'input--filled' );
+			}
+
+			// events:
+			inputEl.addEventListener( 'focus', onInputFocus );
+			inputEl.addEventListener( 'blur', onInputBlur );
+		} );
+
+		function onInputFocus( ev ) {
+			classie.add( ev.target.parentNode, 'input--filled' );
+		}
+
+		function onInputBlur( ev ) {
+			if( ev.target.value.trim() === '' ) {
+				classie.remove( ev.target.parentNode, 'input--filled' );
+			}
+		}
+	})();
+	
+	$(function() {	
+		$('#login #login-password').focus(function() {
+			$('.login-owl').addClass('password');
+		}).blur(function() {
+			$('.login-owl').removeClass('password');
+		});
+		$('#login #register-password').focus(function() {
+			$('.register-owl').addClass('password');
+		}).blur(function() {
+			$('.register-owl').removeClass('password');
+		});
+		$('#login #register-repassword').focus(function() {
+			$('.register-owl').addClass('password');
+		}).blur(function() {
+			$('.register-owl').removeClass('password');
+		});
+		$('#login #forget-password').focus(function() {
+			$('.forget-owl').addClass('password');
+		}).blur(function() {
+			$('.forget-owl').removeClass('password');
+		});
+	});
+	
+	function goto_register(){
+		$("#register-username").val("");
+		$("#register-password").val("");
+		$("#register-repassword").val("");
+		$("#register-code").val("");
+		$("#tab-2").prop("checked",true);
+	}
+	
+	function goto_login(){
+		$("#login-username").val("");
+		$("#login-password").val("");
+		$("#tab-1").prop("checked",true);
+	}
+	
+	function goto_forget(){
+		$("#forget-username").val("");
+		$("#forget-password").val("");
+		$("#forget-code").val("");
+		$("#tab-3").prop("checked",true);
+	}
+	
+	$(function () {
+	    $('.btn').click(function () {
+	        //获取用户名和密码
+            var username=$("#login-username").val()
+            var password=$("#login-password").val()
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            //发起ajax请求
+            var params={
+                'username': username,
+                'password': password,
+                'csrfmiddlewaretoken': csrf,
+            }
+            //提交
+            $.post('{% url 'user:test' %}',params,function (data) {
+                //登录失败
+                if (data.res==0){
+                    alert('登录失败！')
+                }
+                else if(data.res==1){
+                    alert('登录成功！'),
+                    location.href=data.next_url
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+<style type="text/css">
+html{width: 100%; height: 100%;}
+
+body{
+
+	background-repeat: no-repeat;
+
+	background-position: center center #2D0F0F;
+
+	background-color: #00BDDC;
+
+	background-image: url({% static 'test/images/snow.jpg' %});
+
+	background-size: 100% 100%;
+
+}
+
+.snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100001; }
+
+</style>
+</head>
+<body>
+	<!-- 雪花背景 -->
+	<div class="snow-container"></div>
+	<!-- 登录控件 -->
+	<div id="login">
+		<input id="tab-1" type="radio" name="tab" class="sign-in hidden" checked />
+		<input id="tab-2" type="radio" name="tab" class="sign-up hidden" />
+		<input id="tab-3" type="radio" name="tab" class="sign-out hidden" />
+		<div class="wrapper">
+			<!-- 登录页面 -->
+			<div class="login sign-in-htm">
+				<form class="container offset1 loginform">
+                    {% csrf_token %}
+
+					<!-- 猫头鹰控件 -->
+					<div id="owl-login" class="login-owl">
+						<div class="hand"></div>
+						<div class="hand hand-r"></div>
+						<div class="arms">
+							<div class="arm"></div>
+							<div class="arm arm-r"></div>
+						</div>
+					</div>
+					<div class="pad input-container">
+						<section class="content">
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="text" id="login-username" 
+									autocomplete="off" placeholder="请输入用户名" tabindex="1" maxlength="15" />
+								<label class="input__label input__label--hideo" for="login-username">
+									<i class="fa fa-fw fa-user icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" type="password" id="login-password" placeholder="请输入密码" tabindex="2" maxlength="15"/>
+								<label class="input__label input__label--hideo" for="login-password">
+									<i class="fa fa-fw fa-lock icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+						</section>
+					</div>
+					<div class="form-actions" style="text-align: center">
+						<input class="btn btn-primary" type="button" tabindex="3" onClick="login()" value="登录"
+							style="color:white;"/>
+					</div>
+				</form>
+			</div>
+
+
+		</div>
+	</div>
+	<div style="text-align:center;">
+</div>
+  <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+<div style="color: #FF0000;font-size: 20px;text-align: center">
+
+    <p>视图层SQL语句：</p>
+    <p>sql="SELECT * FROM users_passport WHERE username='{0}' AND password='{1}' AND is_active=1".format(username,password)<br>
+    <p>例：用户名输入 <span style="color: black">'OR 1=1#</span>，密码任意</p>
+
+
+</div>
+</body>
+</html>

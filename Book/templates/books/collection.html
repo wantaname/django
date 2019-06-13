@@ -1,0 +1,68 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>图灵书城-书籍采购</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/collection.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+</head>
+<body background="{% static 'images/bg.jpg' %}">
+<!-- 带有一些vue语法 使用时可删除掉 -->
+<div class="input-group">
+
+    <div class="select">
+        {% csrf_token %}
+        <select id="select" v-model="selected" class="type">
+            <option class="option" value="1">后端开发</option>
+            <option class="option" value="2">前端开发</option>
+            <option class="option" value="3">数据结构&算法</option>
+            <option class="option" value="4">人工智能&大数据</option>
+            <option class="option" value="5">网络&操作系统</option>
+            <option class="option" value="6">数据库</option>
+            <option class="option" value="7">其他</option>
+        </select></div>
+    <input type="text" id="input" placeholder="请输入您要采购的书籍" onfocus="this.placeholder=' ' "
+           onblur=" this.placeholder='请输入您要采购的书籍' "
+           v-model="searchValue">
+
+    <!-- placeholder的点击消失及为空时点击其他继续显示提示  -->
+    <span class=" ">
+				<button id="button" class=" " type="submit"><img src="{% static 'images/search.png' %}"/></button>
+			</span>
+</div>
+<br/>
+<div style="color:	#00FF00;text-align: center " class="tip">欢迎来到图灵书城采集系统!</div>
+
+<script>
+    $(function () {
+        $('#button').click(function () {
+            //获取type
+            var type = $('.type option:selected').val()
+            //获取输入
+            var book = $('#input').val()
+            //csrf
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            //请求参数
+            var params = {
+                'type': type,
+                'book': book,
+                'csrfmiddlewaretoken': csrf,
+            }
+            //改变提示
+                $(".tip").html('正在采集,请稍等......');
+            //提交
+            $.post('{% url 'books:collection' %}', params, function (data) {
+
+                var total = data.count;
+                var success = data.success;
+                var defeat = data.defeat;
+                $(".tip").html('您好!一共采集' + total + "册书,成功添加" + success + '册,' + defeat + '册添加失败')
+
+
+            })
+        })
+    })
+</script>
+</body>
+</html>
