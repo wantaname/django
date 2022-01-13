@@ -34,7 +34,7 @@ Markdown==3.1
 MarkupSafe==1.1.1
 odfpy==1.4.0
 openpyxl==2.6.2
-Pillow==6.0.0
+Pillow==9.0.0
 pycparser==2.19
 pycryptodomex==3.7.2
 PyMySQL==0.9.2
